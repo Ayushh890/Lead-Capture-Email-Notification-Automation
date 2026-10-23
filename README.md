@@ -38,18 +38,19 @@ Client Submits Form
 
 
 flowchart LR
-    A["1. Client submits form<br/>n8n Form Trigger"] --> B["2. Append lead details<br/>Google Sheets"]
-    B --> C["3. Send email notification<br/>Gmail"]
-    C --> D["4. Lead captured<br/>Notification received"]
+  ```mermaid
+flowchart TD
+    A["Client submits form"]
+    B["n8n Form Trigger"]
+    C["Google Sheets: Append Row"]
+    D["Gmail: Send Notification"]
+    E["Lead captured successfully"]
 
-    A -.- A1["Name and selected service"]
-    B -.- B1["Name, service, timestamp"]
-    C -.- C1["Email containing lead details"]
-
-    style A fill:#F3E8FF,stroke:#8B5CF6,color:#1E1B4B
-    style B fill:#DCFCE7,stroke:#16A34A,color:#14532D
-    style C fill:#DBEAFE,stroke:#2563EB,color:#1E3A8A
-    style D fill:#E0F2FE,stroke:#0284C7,color:#0C4A6E
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+```
 
 
 ## Technology Stack
