@@ -1,0 +1,379 @@
+{
+  "name": "Lead Capture & Email Notification Automation",
+  "description": "Template workflow: captures client inquiries, appends lead details to Google Sheets, and sends a Gmail notification. Configure credentials and destination settings after importing.",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Automation 1\n###  n8n form ->  excel sheet ->  gmail .\n",
+        "height": 144
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -80,
+        -176
+      ],
+      "typeVersion": 1,
+      "id": "8d785f3c-9cd0-4754-9d62-81f4394cfa8a",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "formTitle": "Ayush consultancy form",
+        "formDescription": "hey !!  Glad to meet you.\nPlease fill in the below details so as to connect with Ayush for AI training.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "placeholder": "Your Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Service",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Consultancy"
+                  },
+                  {
+                    "option": "Training"
+                  },
+                  {
+                    "option": "Repair"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "buttonLabel": "Submit form"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        192,
+        0
+      ],
+      "id": "3c7a27df-1e2b-4ad9-b54a-8735daeb7581",
+      "name": "On form submission",
+      "notesInFlow": true,
+      "notes": "form "
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.Name }}",
+            "Services": "={{ $json.Service }}",
+            "Time": "={{ $json.submittedAt }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Services",
+              "displayName": "Services",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Time",
+              "displayName": "Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        416,
+        0
+      ],
+      "id": "26746a21-42f0-4c41-a4f3-8bba5b2702ba",
+      "name": "Append row in sheet",
+      "notesInFlow": true,
+      "notes": "first workflow"
+    },
+    {
+      "parameters": {
+        "sendTo": "YOUR_EMAIL_ADDRESS@example.com",
+        "subject": "Form Lead update",
+        "emailType": "text",
+        "message": "=Hello!\n\nA new lead has been submitted.\nName: {{ $json.Name }}\nService: {{ $json.Services }}\nTime: {{ $json.Time }}\n\nSource: {{ $workflow.id }}\n\nThis is an automated notification.",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        0
+      ],
+      "id": "4c3f890a-81b6-40c5-842a-f95dbadd001f",
+      "name": "Send a message",
+      "notesInFlow": true,
+      "notes": "mail generated"
+    }
+  ],
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "tags": [
+    {
+      "name": "lead-automation"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-10-17T19:56:47.000Z",
+    "createdAt": "2026-10-17T19:50:44.039Z",
+    "nodes": [
+      {
+        "parameters": {
+          "content": "## Automation 1\n###  n8n form ->  excel sheet ->  gmail .\n",
+          "height": 144
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -80,
+          -176
+        ],
+        "typeVersion": 1,
+        "id": "8d785f3c-9cd0-4754-9d62-81f4394cfa8a",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "formTitle": "Ayush consultancy form",
+          "formDescription": "hey !!  Glad to meet you.\nPlease fill in the below details so as to connect with Ayush for AI training.",
+          "formFields": {
+            "values": [
+              {
+                "fieldLabel": "Name",
+                "placeholder": "Your Name",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Service",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "Consultancy"
+                    },
+                    {
+                      "option": "Training"
+                    },
+                    {
+                      "option": "Repair"
+                    }
+                  ]
+                },
+                "requiredField": true
+              }
+            ]
+          },
+          "options": {
+            "buttonLabel": "Submit form"
+          }
+        },
+        "type": "n8n-nodes-base.formTrigger",
+        "typeVersion": 2.6,
+        "position": [
+          192,
+          0
+        ],
+        "id": "3c7a27df-1e2b-4ad9-b54a-8735daeb7581",
+        "name": "On form submission",
+        "notesInFlow": true,
+        "notes": "form "
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "YOUR_GOOGLE_SHEET_ID",
+            "mode": "id"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": "Sheet1",
+            "mode": "name"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "Name": "={{ $json.Name }}",
+              "Services": "={{ $json.Service }}",
+              "Time": "={{ $json.submittedAt }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "Name",
+                "displayName": "Name",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Services",
+                "displayName": "Services",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Time",
+                "displayName": "Time",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          416,
+          0
+        ],
+        "id": "26746a21-42f0-4c41-a4f3-8bba5b2702ba",
+        "name": "Append row in sheet",
+        "notesInFlow": true,
+        "notes": "first workflow"
+      },
+      {
+        "parameters": {
+          "sendTo": "YOUR_EMAIL_ADDRESS@example.com",
+          "subject": "Form Lead update",
+          "emailType": "text",
+          "message": "=Hello!\n\nA new lead has been submitted.\nName: {{ $json.Name }}\nService: {{ $json.Services }}\nTime: {{ $json.Time }}\n\nSource: {{ $workflow.id }}\n\nThis is an automated notification.",
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          640,
+          0
+        ],
+        "id": "4c3f890a-81b6-40c5-842a-f95dbadd001f",
+        "name": "Send a message",
+        "notesInFlow": true,
+        "notes": "mail generated"
+      }
+    ],
+    "connections": {
+      "On form submission": {
+        "main": [
+          [
+            {
+              "node": "Append row in sheet",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Append row in sheet": {
+        "main": [
+          [
+            {
+              "node": "Send a message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodeGroups": [],
+    "name": "Lead Capture & Email Notification Automation",
+    "description": "Template workflow: captures client inquiries, appends lead details to Google Sheets, and sends a Gmail notification. Configure credentials and destination settings after importing."
+  }
+}
